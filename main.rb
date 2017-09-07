@@ -1,11 +1,27 @@
-require 'gosu'
+require 'gosu/all'
+class DeadCell < Gosu::Grid::Cell
+  def size
+    object.width
+  end
 
-class MyWindow < Gosu::Window
-  def initialize
-    super 640, 480
-    self.caption = 'Binary_game'
+  private
+
+  def object
+    @object ||= Gosu::Image.new('assets/dead_cell.png', {})
   end
 end
 
-window = MyWindow.new
-window.show
+class GridGameExample < Gosu::Window
+  def initialize
+    super(540, 320, false)
+    @grid = Gosu::Grid.new(self)
+    @grid.default_cell = DeadCell.new(self, 0, 0)
+  end
+
+  def draw
+    @grid.draw && sleep(0.05)
+  end
+end
+
+meep = GridGameExample.new
+meep.show
