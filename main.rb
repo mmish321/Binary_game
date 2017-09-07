@@ -1,27 +1,32 @@
 require 'gosu/all'
-class DeadCell < Gosu::Grid::Cell
-  def size
-    object.width
-  end
+require_relative 'emptycell'
+require_relative "iconcell"
+require_relative "grid"
 
-  private
-
-  def object
-    @object ||= Gosu::Image.new('assets/dead_cell.png', {})
-  end
-end
 
 class GridGameExample < Gosu::Window
-  def initialize
-    super(540, 320, false)
-    @grid = Gosu::Grid.new(self)
-    @grid.default_cell = DeadCell.new(self, 0, 0)
+ 
+  def initialize(bit_size, code_length)
+    if (bit_size == 3) 
+      super(1200, 800, false)
+    end
+    if (bit_size == 4) 
+      super(1600, 800, false)
+    end
+    @bit_size = bit_size
+    @code_length = code_length
+    @background_image = Gosu::Image.new("assets/clouds.jpg", {})
+    @grid = CustomGrid.new(self, @bit_size, @code_length)
+    puts @grid.code 
   end
 
+
+
   def draw
-    @grid.draw && sleep(0.05)
+    @background_image.draw(0,0,0)
+    @grid.draw
   end
 end
 
-meep = GridGameExample.new
+meep = GridGameExample.new(4, 4)
 meep.show
