@@ -1,11 +1,13 @@
 class EmptyCell < Gosu::Grid::Cell
-  def size
-    object.width
+  def initialize(window, row, column, picture)
+  	super(window, row, column)
+  	@picture = picture
   end
 
-  private
-  
+  def size
+    object.width 
+  end
   def object
-    @object ||= Gosu::Image.new('assets/empty_cell.png', {})
+  	@object = Gosu::Image.new(@picture,{})
   end
 end

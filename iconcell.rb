@@ -1,11 +1,13 @@
 class IconCell < Gosu::Grid::Cell
+  def initialize(window, row, column, picture)
+  	super(window, row, column)
+  	@picture = picture
+  end
+
   def size
     object.width 
   end
-
-  private
-
   def object
-    @object ||= Gosu::Image.new('assets/star.png', {})
+  	@object = Gosu::Image.new(@picture,{})
   end
 end

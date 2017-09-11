@@ -1,3 +1,4 @@
+
 class CustomGrid < Gosu::Grid 
   def initialize(window, bit_size, code_length )
     super(window)
@@ -9,11 +10,18 @@ class CustomGrid < Gosu::Grid
 
   def gridAssembly( bit_size, code_length)
     main_grid = Array.new
-    #if (bit_size == 3)
-     #main_grid.insert(0,[4,2,1]);
-    #else
-     #main_grid.insert(0,[8,4,2,1]);
-   # end
+    if (bit_size == 3)
+     @cells.push(IconCell.new(self,0,0,'assets/4_100.png'))
+     @cells.push(IconCell.new(self,1,0,'assets/2_100.png'))
+     @cells.push(IconCell.new(self,2,0,'assets/1_100.png'))
+    else
+     @cells.push(IconCell.new(self,0,0,'assets/8_100.png')) 
+     @cells.push(IconCell.new(self,1,0,'assets/4_100.png'))
+     @cells.push(IconCell.new(self,2,0,'assets/2_100.png'))
+     @cells.push(IconCell.new(self,3,0,'assets/1_100.png'))
+
+    end
+    
     for i in 0..(code_length - 1)
       if (bit_size == 3) 
         r = rand(0...7);
@@ -28,10 +36,10 @@ class CustomGrid < Gosu::Grid
     for i in 0..(main_grid.length() -1)
       for j in 0..(main_grid[i].length() -1)
         if (main_grid[i][j] == 0)
-          @cells.push(EmptyCell.new(self,j,i))
+          @cells.push(IconCell.new(self,j,i +1, 'assets/empty_cell_100.png'))
         end
         if (main_grid[i][j] == 1)
-          @cells.push(IconCell.new(self,j,i))
+          @cells.push(IconCell.new(self,j,i + 1, 'assets/star100.png'))
         end
       end
     end
