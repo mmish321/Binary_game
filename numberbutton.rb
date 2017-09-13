@@ -10,7 +10,8 @@ class NumberButton < Number
 		end
 	end
 	def clicked_on
-		@image = Gosu::Image.new('assets/#{@number}_button_click.png',{})
+		temp = "assets/#{@value}_100_gold.png"
+		@image = Gosu::Image.new(temp,{})
 	end
 	def unclick
 		@image = Gosu::Image.new(@image_x, {})
