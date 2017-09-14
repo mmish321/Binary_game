@@ -10,11 +10,15 @@ class Cursor
       @x = num
     end
     def click
-    	@image = Gosu::Image.new('assets/cursor_click.png',{})
+        if (Gosu::button_down? Gosu::MsLeft) then
+    	   @image = Gosu::Image.new('assets/cursor_click.png',{})
+           return true
+        else
+            @image = Gosu::Image.new('assets/cursor.png', {})
+           return false
+        end
     end
-    def unclick
-    	@image = Gosu::Image.new('assets/cursor.png', {})
-    end
+    
     def change_y(num)
     	@y = num
     end

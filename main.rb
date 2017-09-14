@@ -5,7 +5,6 @@ require_relative "cursor"
 require_relative "numberbutton"
 require_relative "number"
 require_relative "graphic"
-require "auto_click"
 
 class BinaryGame < Gosu::Window
  
@@ -23,7 +22,7 @@ class BinaryGame < Gosu::Window
     @numbers = Array.new
     @dashes = Array.new
     if (bit_size == 3) 
-      super(1200, 800, false)
+      super(1200, 800, false, update_interval = 100)
       for i in 0...8
         if i <=3
           @buttons.push(NumberButton.new(450+(i*200), 550, "assets/#{i}_100_blue.png", i))
@@ -41,7 +40,7 @@ class BinaryGame < Gosu::Window
       end
     end
     if (bit_size == 4) 
-      super(1600, 800, false)
+      super(1600, 800, false, update_interval = 100)
       for i in 0...16
         if i <=7
           @buttons.push(NumberButton.new(425+(i* 150), 525, "assets/#{i}_100_blue.png", i))
@@ -61,59 +60,55 @@ class BinaryGame < Gosu::Window
   end
  
   def update
-    if (Gosu::button_down? Gosu::MsLeft) then
-      @cursor.click
-    else
-      @cursor.unclick
-    end
+    @cursor.click
     @cursor.change_x(mouse_x)
     @cursor.change_y(mouse_y)
-    click = 0
     for button in @buttons
-      if button.clicked_on?(@cursor) && (Gosu::button_down? Gosu::MsLeft) then
-        button.clicked_on
-      elsif button.clicked_on?(@cursor) && !(Gosu::button_down? Gosu::MsLeft) then
-        button.unclick
-        click +=1
-      else
-        button.unclick
-     end
-      if (click  == 1) 
-        do_stuff(button)
-      end
-    end
-    puts click
-  end
- def do_stuff(button)
-    if (@numbers.length() < @code_length)
-      if (@bit_size == 3)
-        x_pos = (200 * @numbers.length()) + 675
-        y_pos = 400
-        temp ="assets/" + button.value.to_s + "_blue_plain.png"
-        @numbers.push(Number.new(x_pos, y_pos, temp, button.value)) 
-      end
-      if (@bit_size == 4)
-        x_pos = (200* @numbers.length()) + 835
-        y_pos = 380
-        temp ="assets/" + button.value.to_s + "_blue_plain.png"
-        @numbers.push(Number.new(x_pos, y_pos,temp,button.value)) 
-      end
-    else
-      temp = Array.new
-      for number in @numbers
-        temp.push(number.value)
-      end
-      if temp.eql?(@code)
-        @goal_image = Gosu::Image.new("assets/bear&honey_400_receiving.png",{})
-        @buttons.clear
-      else
-        @numbers.clear
+      if (@numbers.length() < @code_length) && button.click_on?(@cursor) && @cursor.click
+        if (@bit_size == 3)
+          if (@code_length == 4)
+            x_pos = (200 * @numbers.length()) + 450
+            y_pos = 400
+          else
+            x_pos = (200 * @numbers.length()) + 650
+            y_pos = 400
+          end
+          temp ="assets/" + button.value.to_s + "_blue_plain.png"
+          @numbers.push(Number.new(x_pos, y_pos, temp, button.value)) 
+        end
+        if (@bit_size == 4)
+          if (@code_length == 4)
+            x_pos = (200* @numbers.length()) + 820
+            y_pos = 350
+          else
+            x_pos =(200* @numbers.length()) + 1020
+            y_pos = 350
+          end
+          temp ="assets/" + button.value.to_s + "_blue_plain.png"
+          @numbers.push(Number.new(x_pos, y_pos,temp,button.value)) 
+        end
+      elsif @numbers.length() == @code_length
+        equal = true
+        for i in 0...@code_length
+          if (@numbers[i].value != @code[i])
+            equal = false
+          end
+        end
+        if equal
+          @goal_image = Gosu::Image.new("assets/bear&honey_400_receiving.png",{})
+          @buttons.clear
+        end
       end
     end
   end
+
+
  def draw
     for number in @numbers
       number.draw
+    end
+    if @buttons.length() != 0  && @numbers.length() == @code_length
+      @numbers.clear
     end
     for dash in @dashes
       dash.draw
@@ -135,5 +130,5 @@ class BinaryGame < Gosu::Window
 
 end
 
-meep = BinaryGame.new(3,3)
+meep = BinaryGame.new(4,3)
 meep.show
