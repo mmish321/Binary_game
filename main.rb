@@ -22,7 +22,7 @@ class BinaryGame < Gosu::Window
     @numbers = Array.new
     @dashes = Array.new
     if (bit_size == 3) 
-      super(1200, 800, false, update_interval = 100)
+      super(1200, 800, false, update_interval = 101)
       for i in 0...8
         if i <=3
           @buttons.push(NumberButton.new(450+(i*200), 550, "assets/#{i}_100_blue.png", i))
@@ -40,7 +40,7 @@ class BinaryGame < Gosu::Window
       end
     end
     if (bit_size == 4) 
-      super(1600, 800, false, update_interval = 100)
+      super(1600, 800, false, update_interval = 108)
       for i in 0...16
         if i <=7
           @buttons.push(NumberButton.new(425+(i* 150), 525, "assets/#{i}_100_blue.png", i))
@@ -67,7 +67,7 @@ class BinaryGame < Gosu::Window
       if (@numbers.length() < @code_length) && button.click_on?(@cursor) && @cursor.click
         if (@bit_size == 3)
           if (@code_length == 4)
-            x_pos = (200 * @numbers.length()) + 450
+            x_pos = (200 * @numbers.length()) + 428
             y_pos = 400
           else
             x_pos = (200 * @numbers.length()) + 650
@@ -78,7 +78,7 @@ class BinaryGame < Gosu::Window
         end
         if (@bit_size == 4)
           if (@code_length == 4)
-            x_pos = (200* @numbers.length()) + 820
+            x_pos = (200* @numbers.length()) + 860
             y_pos = 350
           else
             x_pos =(200* @numbers.length()) + 1020
@@ -130,5 +130,5 @@ class BinaryGame < Gosu::Window
 
 end
 
-meep = BinaryGame.new(4,3)
+meep = BinaryGame.new(4,4)
 meep.show
