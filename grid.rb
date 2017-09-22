@@ -6,6 +6,7 @@ class CustomGrid < Gosu::Grid
     @bit_size = bit_size
     @code_length = code_length
     gridAssembly(@bit_size, @code_length)
+    @display = false
   end
 
   def gridAssembly( bit_size, code_length)
@@ -83,12 +84,17 @@ class CustomGrid < Gosu::Grid
   end
 
   def draw
-    @cells.each do |cell|
-      cell.draw
-    end
+      @cells.each do |cell|
+        cell.draw
+      end
   end
   def code
     @code
   end
-
+  def bit_size(n)
+    @bit_size = n
+  end
+  def code_length(n)
+    @code_length = n
+  end
 end

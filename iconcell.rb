@@ -3,11 +3,14 @@ class IconCell < Gosu::Grid::Cell
   	super(window, row, column)
   	@picture = picture
   end
-
+  def z
+    1
+  end
   def size
     object.width 
   end
   def object
   	@object = Gosu::Image.new(@picture,{})
   end
+
 end
