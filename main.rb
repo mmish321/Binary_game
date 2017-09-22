@@ -67,7 +67,7 @@ class BinaryGame < Gosu::Window
       end
       if !@change &&  @choices.length() == 1
         @font.draw("Binary Game", 650,0,1,1.0,1.0,0xff_000000)
-         @font.draw("Code Length?",600,300,1,1.0,1.0,0xff_000000)
+        @font.draw("Code Length?",600,300,1,1.0,1.0,0xff_000000)
       end
     end
     def cursor_movement
@@ -83,9 +83,11 @@ class BinaryGame < Gosu::Window
     end
 
     def draw_number
-      for number in @numbers
-       number.draw
-     end
+      if @change
+        for number in @numbers
+        number.draw
+      end
+      end
     end
 
     def draw_button
