@@ -10,7 +10,7 @@ require_relative "graphic"
 class BinaryGame < Gosu::Window
  
   def initialize()
-    super(1600,800,true, update_interval = 101)
+    super(1600,900,false, update_interval = 101)
     @change = false
     @cursor = Cursor.new
     @bit_size = 0
