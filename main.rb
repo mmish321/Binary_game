@@ -160,7 +160,6 @@ class BinaryGame < Gosu::Window
               else
                 @goal_image = Gosu::Image.new("assets/spencer&carrot_400_no_key.png", {})
               end
-             
               @buttons.clear
               @correct = true
             end
