@@ -10,7 +10,7 @@ require_relative "graphic"
 class BinaryGame < Gosu::Window
  
   def initialize()
-    super(1600,900,false, update_interval = 101)
+    super(1600,900,false)
     @change = false
     @cursor = Cursor.new
     @bit_size = 0
@@ -124,7 +124,7 @@ class BinaryGame < Gosu::Window
     def check_input
       if @change 
         for button in @buttons
-          if (@numbers.length() < @code_length) && button.click_on?(@cursor) && @cursor.click
+          if (@numbers.length() < @code_length) && button.click_on?(@cursor) && @cursor.click && @cursor.reset
             if (@bit_size == 3)
               if (@code_length == 4)
                 x_pos = (200 * @numbers.length()) + 428
@@ -167,7 +167,7 @@ class BinaryGame < Gosu::Window
         end
       else
         for button in @buttons
-          if button.click_on?(@cursor) && @cursor.click
+          if button.click_on?(@cursor) && @cursor.click && @cursor.reset
             @choices.push(button.value)
           end
         end
